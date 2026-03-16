@@ -12,7 +12,11 @@ export async function GET(req: NextRequest) {
   const dateTo = searchParams.get('dateTo') ?? undefined
 
   const [youtubeVideos, instagramVideos] = await Promise.all([
-    fetchYouTubeFromSupabase(),
+    fetchYouTubeFromSupabase({
+      creatorName,
+      dateFrom,
+      dateTo,
+    }),
     fetchInstagramFromSupabase({
       creatorName,
       dateFrom,

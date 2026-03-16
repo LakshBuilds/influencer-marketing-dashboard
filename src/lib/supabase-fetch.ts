@@ -1,6 +1,6 @@
 import { supabaseInstagram, supabaseYouTube } from './supabase'
 import type { Video } from '@/types/database'
-import { mapReelsRow } from './map-rows'
+import { mapReelsRow, mapYouTubeRow } from './map-rows'
 
 interface Filters {
   creatorName?: string
@@ -67,10 +67,51 @@ export async function fetchInstagramFromSupabase(
 }
 
 export async function fetchYouTubeFromSupabase(
-  _filters: Filters = {}
+  filters: Filters = {}
 ): Promise<Video[]> {
-  // TODO: Re-implement YouTube fetch logic as needed.
   if (!supabaseYouTube) return []
-  return []
+
+  const pageSize = 1000
+  const allRows: Record<string, unknown>[] = []
+
+  for (let from = 0; ; from += pageSize) {
+    let q = supabaseYouTube
+      .from('videos')
+      .select(`
+        id,
+        video_url,
+        view_count,
+        payout,
+        channel_name,
+        created_by_name,
+        created_by_email,
+        published_at
+      `)
+      .order('published_at', { ascending: false })
+
+    if (filters.creatorName) {
+      const term = filters.creatorName.replace(/'/g, "''")
+      q = q.ilike('channel_name', `%${term}%`)
+    }
+    if (filters.dateFrom) {
+      q = q.gte('published_at', filters.dateFrom)
+    }
+    if (filters.dateTo) {
+      q = q.lte('published_at', filters.dateTo)
+    }
+
+    const to = from + pageSize - 1
+    const { data, error } = await q.range(from, to)
+    if (error) throw error
+
+    const batch = (data ?? []) as Record<string, unknown>[]
+    allRows.push(...batch)
+
+    if (batch.length < pageSize) {
+      break
+    }
+  }
+
+  return allRows.map((row) => mapYouTubeRow(row))
 }
 
