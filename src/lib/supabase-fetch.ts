@@ -66,7 +66,9 @@ export async function fetchInstagramFromSupabase(
   return allRows.map((row) => mapReelsRow(row))
 }
 
-export async function fetchYouTubeFromSupabase(): Promise<Video[]> {
+export async function fetchYouTubeFromSupabase(
+  _filters: Filters = {}
+): Promise<Video[]> {
   // TODO: Re-implement YouTube fetch logic as needed.
   if (!supabaseYouTube) return []
   return []
