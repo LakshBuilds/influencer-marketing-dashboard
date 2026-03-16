@@ -1,7 +1,7 @@
 import type { Video } from '@/types/database'
 
 export function mapReelsRow(row: Record<string, unknown>): Video {
-  const views = Number(row.videoviewcount ?? row.videoplaycount ?? 0)
+  const views = Number(row.videoplaycount ?? row.videoviewcount ?? 0)
 
   const payoutRaw = row.payout
   const payout =
