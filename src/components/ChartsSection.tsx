@@ -67,12 +67,14 @@ export function ChartsSection({
     )
   }
 
-  const formatViews = (v: number): string =>
-    v >= 1_000_000
+  const formatViews = (v: number): string => {
+    if (!Number.isFinite(v)) return '0'
+    return v >= 1_000_000
       ? `${(v / 1_000_000).toFixed(1)}M`
       : v >= 1_000
       ? `${(v / 1_000).toFixed(1)}K`
       : v.toLocaleString()
+  }
   const formatDate = (d: string) => {
     // d is YYYY-MM-DD
     const dt = new Date(d)
@@ -178,7 +180,7 @@ export function ChartsSection({
                   />
                   <YAxis
                     tick={{ fontSize: 11 }}
-                    tickFormatter={(value: any) => formatViews(Number(value))}
+                    tickFormatter={(value: number) => formatViews(Number(value))}
                   />
                   <Tooltip
                     labelFormatter={(label) => formatDate(String(label))}
