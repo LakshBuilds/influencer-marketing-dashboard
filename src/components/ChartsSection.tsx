@@ -67,8 +67,12 @@ export function ChartsSection({
     )
   }
 
-  const formatViews = (v: number) =>
-    v >= 1_000_000 ? `${(v / 1_000_000).toFixed(1)}M` : v >= 1_000 ? `${(v / 1_000).toFixed(1)}K` : v
+  const formatViews = (v: number): string =>
+    v >= 1_000_000
+      ? `${(v / 1_000_000).toFixed(1)}M`
+      : v >= 1_000
+      ? `${(v / 1_000).toFixed(1)}K`
+      : v.toLocaleString()
   const formatDate = (d: string) => {
     // d is YYYY-MM-DD
     const dt = new Date(d)
@@ -172,7 +176,10 @@ export function ChartsSection({
                     tickFormatter={formatDate}
                     minTickGap={18}
                   />
-                  <YAxis tick={{ fontSize: 11 }} tickFormatter={formatViews} />
+                  <YAxis
+                    tick={{ fontSize: 11 }}
+                    tickFormatter={(value: any) => formatViews(Number(value))}
+                  />
                   <Tooltip
                     labelFormatter={(label) => formatDate(String(label))}
                     content={({ active, payload, label }) => {
