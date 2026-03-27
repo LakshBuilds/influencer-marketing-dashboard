@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import {
   fetchInstagramFromSupabase,
+  fetchInstagramWeeklyViewsDeltaFromSnapshots,
   fetchYouTubeFromSupabase,
 } from '@/lib/supabase-fetch'
 import type { Video } from '@/types/database'
@@ -16,6 +17,7 @@ function toMs(value: string): number {
  */
 function applyWeeklySnapshotDelta(videos: Video[]): Video[] {
   const byVideo = new Map<string, Video[]>()
+  let hasAnyDelta = false
 
   for (const video of videos) {
     const key = `${video.platform}::${video.video_url || video.id}`
@@ -32,9 +34,44 @@ function applyWeeklySnapshotDelta(videos: Video[]): Video[] {
       if (i === 0 && list.length > 1) {
         const previous = list[i + 1]
         current.weekly_views = Math.max((current.views ?? 0) - (previous.views ?? 0), 0)
+        if ((current.weekly_views ?? 0) > 0) {
+          hasAnyDelta = true
+        }
       } else {
         current.weekly_views = 0
       }
+    }
+  }
+
+  // Fallback: if per-video history isn't available, use platform-level
+  // latest snapshot total minus previous snapshot total.
+  if (!hasAnyDelta) {
+    const byPlatform = new Map<string, Video[]>()
+    for (const v of videos) {
+      const list = byPlatform.get(v.platform) ?? []
+      list.push(v)
+      byPlatform.set(v.platform, list)
+      v.weekly_views = 0
+    }
+
+    for (const [platform, list] of byPlatform.entries()) {
+      const totalsByDay = new Map<string, number>()
+      for (const v of list) {
+        const day = v.posted_at ? v.posted_at.slice(0, 10) : ''
+        if (!day) continue
+        totalsByDay.set(day, (totalsByDay.get(day) ?? 0) + (v.views ?? 0))
+      }
+      const snapshotDays = Array.from(totalsByDay.keys()).sort((a, b) =>
+        b.localeCompare(a)
+      )
+      if (snapshotDays.length < 2) continue
+
+      const latestTotal = totalsByDay.get(snapshotDays[0]) ?? 0
+      const previousTotal = totalsByDay.get(snapshotDays[1]) ?? 0
+      const platformDelta = Math.max(latestTotal - previousTotal, 0)
+
+      const first = videos.find((v) => v.platform === platform)
+      if (first) first.weekly_views = platformDelta
     }
   }
 
@@ -48,7 +85,7 @@ export async function GET(req: NextRequest) {
   const dateFrom = searchParams.get('dateFrom') ?? undefined
   const dateTo = searchParams.get('dateTo') ?? undefined
 
-  const [youtubeVideos, instagramVideos] = await Promise.all([
+  const [youtubeVideos, instagramVideos, instagramWeeklyDelta] = await Promise.all([
     fetchYouTubeFromSupabase({
       creatorName,
       dateFrom,
@@ -59,6 +96,7 @@ export async function GET(req: NextRequest) {
       dateFrom,
       dateTo,
     }),
+    fetchInstagramWeeklyViewsDeltaFromSnapshots(),
   ])
 
   const combined = [...youtubeVideos, ...instagramVideos].sort((a, b) => {
@@ -68,6 +106,11 @@ export async function GET(req: NextRequest) {
   })
 
   const withWeeklyDelta = applyWeeklySnapshotDelta(combined)
+  const instagramRows = withWeeklyDelta.filter((v) => v.platform === 'instagram')
+  for (const row of instagramRows) row.weekly_views = 0
+  if (instagramRows.length > 0) {
+    instagramRows[0].weekly_views = instagramWeeklyDelta
+  }
 
   return NextResponse.json(withWeeklyDelta)
 }
