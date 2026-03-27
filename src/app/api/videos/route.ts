@@ -54,7 +54,7 @@ function applyWeeklySnapshotDelta(videos: Video[]): Video[] {
       v.weekly_views = 0
     }
 
-    for (const [platform, list] of byPlatform.entries()) {
+    for (const [platform, list] of Array.from(byPlatform.entries())) {
       const totalsByDay = new Map<string, number>()
       for (const v of list) {
         const day = v.posted_at ? v.posted_at.slice(0, 10) : ''
