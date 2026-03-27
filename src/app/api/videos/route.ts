@@ -24,7 +24,7 @@ function applyWeeklySnapshotDelta(videos: Video[]): Video[] {
     byVideo.set(key, list)
   }
 
-  for (const list of byVideo.values()) {
+  for (const list of Array.from(byVideo.values())) {
     list.sort((a, b) => toMs(b.posted_at) - toMs(a.posted_at))
 
     for (let i = 0; i < list.length; i++) {
