@@ -26,7 +26,8 @@ export function mapReelsRow(row: Record<string, unknown>): Video {
     views,
     weekly_views: views,
     payout,
-    employee_name: String(row.created_by_name ?? row.created_by_email ?? ''),
+    employee_name: String(row.created_by_name ?? ''),
+    employee_email: String(row.created_by_email ?? ''),
     creator_name: String(row.ownerfullname ?? row.ownerusername ?? ''),
     posted_at: postedAt,
   }
@@ -52,7 +53,8 @@ export function mapYouTubeRow(row: Record<string, unknown>): Video {
     views,
     weekly_views: views,
     payout,
-    employee_name: String(row.created_by_name ?? row.created_by_email ?? ''),
+    employee_name: String(row.created_by_name ?? ''),
+    employee_email: String(row.created_by_email ?? ''),
     creator_name: String(row.channel_name ?? ''),
     posted_at: postedAt,
   }

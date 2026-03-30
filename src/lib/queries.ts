@@ -15,16 +15,16 @@ export function fetchOverview(videos: Video[]) {
 export function computeEmployeeStats(videos: Video[]): EmployeeStats[] {
   const map = new Map<string, { videos: number; views: number; payout: number }>()
   for (const v of videos) {
-    const name = v.employee_name || 'Unknown'
-    const cur = map.get(name) ?? { videos: 0, views: 0, payout: 0 }
-    map.set(name, {
+    const email = (v.employee_email || '').trim() || 'Unknown'
+    const cur = map.get(email) ?? { videos: 0, views: 0, payout: 0 }
+    map.set(email, {
       videos: cur.videos + 1,
       views: cur.views + (v.views ?? 0),
       payout: cur.payout + (v.payout ?? 0),
     })
   }
-  return Array.from(map.entries()).map(([employee_name, s]) => ({
-    employee_name,
+  return Array.from(map.entries()).map(([employee_email, s]) => ({
+    employee_email,
     total_videos: s.videos,
     total_views: s.views,
     total_payout: s.payout,
@@ -73,7 +73,7 @@ export function getViewsPerWeekData(videos: Video[]) {
 
 export function getPayoutPerEmployeeData(videos: Video[]): { name: string; payout: number }[] {
   return computeEmployeeStats(videos).map((e) => ({
-    name: e.employee_name,
+    name: e.employee_email,
     payout: e.total_payout,
   }))
 }
@@ -83,7 +83,7 @@ export function getCPVPerEmployeeData(videos: Video[]): { name: string; payout: 
   return computeEmployeeStats(videos).map((e) => {
     const cpv = e.total_views > 0 ? e.total_payout / e.total_views : 0
     return {
-      name: e.employee_name,
+      name: e.employee_email,
       payout: e.total_payout,
       views: e.total_views,
       cpv: Math.round(cpv * 100) / 100,

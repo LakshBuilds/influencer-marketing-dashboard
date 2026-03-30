@@ -40,7 +40,7 @@ export function EmployeePerformanceTable({ data, loading, title = 'Employee Perf
         <table className="w-full text-left text-sm">
           <thead>
             <tr className="border-b border-border bg-surface-muted/50">
-              <th className="px-5 py-3 font-medium text-muted">Employee Name</th>
+              <th className="px-5 py-3 font-medium text-muted">Created by (email)</th>
               <th className="px-5 py-3 font-medium text-muted">Total Videos</th>
               <th className="px-5 py-3 font-medium text-muted">Total Views</th>
               <th className="px-5 py-3 font-medium text-muted">Total Payout</th>
@@ -55,8 +55,8 @@ export function EmployeePerformanceTable({ data, loading, title = 'Employee Perf
               </tr>
             ) : (
               data.map((row) => (
-                <tr key={row.employee_name} className="border-b border-border last:border-0">
-                  <td className="px-5 py-3 font-medium text-primary">{row.employee_name}</td>
+                <tr key={row.employee_email} className="border-b border-border last:border-0">
+                  <td className="px-5 py-3 font-medium text-primary">{row.employee_email}</td>
                   <td className="px-5 py-3 tabular-nums text-primary">{row.total_videos}</td>
                   <td className="px-5 py-3 tabular-nums text-primary">
                     {formatNum(row.total_views)}

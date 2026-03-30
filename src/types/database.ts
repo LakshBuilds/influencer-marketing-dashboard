@@ -8,6 +8,7 @@ export interface Video {
   weekly_views: number
   payout: number
   employee_name: string
+  employee_email: string
   creator_name: string
   posted_at: string
 }
@@ -23,7 +24,7 @@ export interface Database {
 }
 
 export interface EmployeeStats {
-  employee_name: string
+  employee_email: string
   total_videos: number
   total_views: number
   total_payout: number
