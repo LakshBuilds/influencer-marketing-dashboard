@@ -3,6 +3,7 @@ import {
   fetchInstagramFromSupabase,
   fetchInstagramWeeklyViewsDeltaFromSnapshots,
   fetchYouTubeFromSupabase,
+  fetchYouTubeWeeklyViewsDeltaFromSnapshots,
 } from '@/lib/supabase-fetch'
 import type { Video } from '@/types/database'
 
@@ -85,7 +86,7 @@ export async function GET(req: NextRequest) {
   const dateFrom = searchParams.get('dateFrom') ?? undefined
   const dateTo = searchParams.get('dateTo') ?? undefined
 
-  const [youtubeVideos, instagramVideos, instagramWeeklyDelta] = await Promise.all([
+  const [youtubeVideos, instagramVideos, instagramWeeklyDelta, youtubeWeeklyDelta] = await Promise.all([
     fetchYouTubeFromSupabase({
       creatorName,
       dateFrom,
@@ -97,6 +98,7 @@ export async function GET(req: NextRequest) {
       dateTo,
     }),
     fetchInstagramWeeklyViewsDeltaFromSnapshots(),
+    fetchYouTubeWeeklyViewsDeltaFromSnapshots(),
   ])
 
   const combined = [...youtubeVideos, ...instagramVideos].sort((a, b) => {
@@ -110,6 +112,12 @@ export async function GET(req: NextRequest) {
   for (const row of instagramRows) row.weekly_views = 0
   if (instagramRows.length > 0) {
     instagramRows[0].weekly_views = instagramWeeklyDelta
+  }
+
+  const youtubeRows = withWeeklyDelta.filter((v) => v.platform === 'youtube')
+  for (const row of youtubeRows) row.weekly_views = 0
+  if (youtubeRows.length > 0) {
+    youtubeRows[0].weekly_views = youtubeWeeklyDelta
   }
 
   return NextResponse.json(withWeeklyDelta)

@@ -58,3 +58,15 @@ Minimal, executive-friendly dashboard for campaign and creator performance. Buil
 - **Video table** — All videos with platform, URL, creator, employee, views, weekly views, payout, posted date  
 
 Data is fetched from both databases via the `/api/videos` route; filters (creator, date range) are applied server-side.
+## Graphify
+
+This project uses a Knowledge Graph for AI-assisted development.
+
+- **Generate Graph**: `node scripts/graphify-project.mjs`
+- **Output**: `project-graph.json`
+- **Exclusions**: Managed via [`.graphifyignore`](file:///Users/buyhatke/Desktop/MASTER DASHBOARD/.graphifyignore)
+
+## Repository
+
+- **GitHub**: [LakshBuilds/influencer-marketing-dashboard](https://github.com/LakshBuilds/influencer-marketing-dashboard.git)
+- **SSH Fingerprint**: `SHA256:op9aJdYdTyTQDpCQmmp75DsUxuzEywLX/k25F7abbtQ`

@@ -1,0 +1,393 @@
+{
+  "projectName": "influencer-marketing-dashboard",
+  "repository": "git@github.com:LakshBuilds/influencer-marketing-dashboard.git",
+  "generatedAt": "2026-04-21T09:43:44.057Z",
+  "structure": [
+    {
+      "type": "directory",
+      "path": ".agent",
+      "name": ".agent"
+    },
+    {
+      "type": "directory",
+      "path": ".agent/rules",
+      "name": "rules"
+    },
+    {
+      "type": "directory",
+      "path": ".agent/workflows",
+      "name": "workflows"
+    },
+    {
+      "type": "file",
+      "path": ".gitignore",
+      "name": ".gitignore",
+      "size": 286,
+      "extension": ""
+    },
+    {
+      "type": "file",
+      "path": ".graphifyignore",
+      "name": ".graphifyignore",
+      "size": 504,
+      "extension": ""
+    },
+    {
+      "type": "file",
+      "path": "README.md",
+      "name": "README.md",
+      "size": 2956,
+      "extension": ".md"
+    },
+    {
+      "type": "file",
+      "path": "next-env.d.ts",
+      "name": "next-env.d.ts",
+      "size": 228,
+      "extension": ".ts"
+    },
+    {
+      "type": "file",
+      "path": "next.config.js",
+      "name": "next.config.js",
+      "size": 92,
+      "extension": ".js"
+    },
+    {
+      "type": "file",
+      "path": "package.json",
+      "name": "package.json",
+      "size": 899,
+      "extension": ".json"
+    },
+    {
+      "type": "file",
+      "path": "postcss.config.js",
+      "name": "postcss.config.js",
+      "size": 82,
+      "extension": ".js"
+    },
+    {
+      "type": "file",
+      "path": "project-graph.json",
+      "name": "project-graph.json",
+      "size": 8270,
+      "extension": ".json"
+    },
+    {
+      "type": "directory",
+      "path": "scripts",
+      "name": "scripts"
+    },
+    {
+      "type": "file",
+      "path": "scripts/capture-mobile-screenshots.mjs",
+      "name": "capture-mobile-screenshots.mjs",
+      "size": 5399,
+      "extension": ".mjs"
+    },
+    {
+      "type": "file",
+      "path": "scripts/filter-search-urls.mjs",
+      "name": "filter-search-urls.mjs",
+      "size": 3612,
+      "extension": ".mjs"
+    },
+    {
+      "type": "file",
+      "path": "scripts/graphify-project.mjs",
+      "name": "graphify-project.mjs",
+      "size": 2452,
+      "extension": ".mjs"
+    },
+    {
+      "type": "file",
+      "path": "scripts/test-db.mjs",
+      "name": "test-db.mjs",
+      "size": 2085,
+      "extension": ".mjs"
+    },
+    {
+      "type": "file",
+      "path": "search-urls-useful.txt",
+      "name": "search-urls-useful.txt",
+      "size": 5588808,
+      "extension": ".txt"
+    },
+    {
+      "type": "file",
+      "path": "search.txt",
+      "name": "search.txt",
+      "size": 5851053,
+      "extension": ".txt"
+    },
+    {
+      "type": "directory",
+      "path": "src",
+      "name": "src"
+    },
+    {
+      "type": "directory",
+      "path": "src/app",
+      "name": "app"
+    },
+    {
+      "type": "directory",
+      "path": "src/app/api",
+      "name": "api"
+    },
+    {
+      "type": "directory",
+      "path": "src/app/api/debug-videos",
+      "name": "debug-videos"
+    },
+    {
+      "type": "file",
+      "path": "src/app/api/debug-videos/route.ts",
+      "name": "route.ts",
+      "size": 2525,
+      "extension": ".ts"
+    },
+    {
+      "type": "directory",
+      "path": "src/app/api/status",
+      "name": "status"
+    },
+    {
+      "type": "file",
+      "path": "src/app/api/status/route.ts",
+      "name": "route.ts",
+      "size": 762,
+      "extension": ".ts"
+    },
+    {
+      "type": "directory",
+      "path": "src/app/api/videos",
+      "name": "videos"
+    },
+    {
+      "type": "file",
+      "path": "src/app/api/videos/route.ts",
+      "name": "route.ts",
+      "size": 4063,
+      "extension": ".ts"
+    },
+    {
+      "type": "file",
+      "path": "src/app/globals.css",
+      "name": "globals.css",
+      "size": 266,
+      "extension": ".css"
+    },
+    {
+      "type": "file",
+      "path": "src/app/layout.tsx",
+      "name": "layout.tsx",
+      "size": 478,
+      "extension": ".tsx"
+    },
+    {
+      "type": "file",
+      "path": "src/app/page.tsx",
+      "name": "page.tsx",
+      "size": 6617,
+      "extension": ".tsx"
+    },
+    {
+      "type": "directory",
+      "path": "src/components",
+      "name": "components"
+    },
+    {
+      "type": "file",
+      "path": "src/components/ChartsSection.tsx",
+      "name": "ChartsSection.tsx",
+      "size": 9166,
+      "extension": ".tsx"
+    },
+    {
+      "type": "file",
+      "path": "src/components/CreatorFilter.tsx",
+      "name": "CreatorFilter.tsx",
+      "size": 597,
+      "extension": ".tsx"
+    },
+    {
+      "type": "file",
+      "path": "src/components/DateRangeFilter.tsx",
+      "name": "DateRangeFilter.tsx",
+      "size": 1163,
+      "extension": ".tsx"
+    },
+    {
+      "type": "file",
+      "path": "src/components/DateRangeStats.tsx",
+      "name": "DateRangeStats.tsx",
+      "size": 1432,
+      "extension": ".tsx"
+    },
+    {
+      "type": "file",
+      "path": "src/components/EmployeePerformanceTable.tsx",
+      "name": "EmployeePerformanceTable.tsx",
+      "size": 3003,
+      "extension": ".tsx"
+    },
+    {
+      "type": "file",
+      "path": "src/components/OverviewCards.tsx",
+      "name": "OverviewCards.tsx",
+      "size": 1721,
+      "extension": ".tsx"
+    },
+    {
+      "type": "file",
+      "path": "src/components/PlatformAnalytics.tsx",
+      "name": "PlatformAnalytics.tsx",
+      "size": 2102,
+      "extension": ".tsx"
+    },
+    {
+      "type": "file",
+      "path": "src/components/PlatformSelector.tsx",
+      "name": "PlatformSelector.tsx",
+      "size": 823,
+      "extension": ".tsx"
+    },
+    {
+      "type": "file",
+      "path": "src/components/VideoTable.tsx",
+      "name": "VideoTable.tsx",
+      "size": 7260,
+      "extension": ".tsx"
+    },
+    {
+      "type": "directory",
+      "path": "src/hooks",
+      "name": "hooks"
+    },
+    {
+      "type": "file",
+      "path": "src/hooks/useVideos.ts",
+      "name": "useVideos.ts",
+      "size": 946,
+      "extension": ".ts"
+    },
+    {
+      "type": "directory",
+      "path": "src/lib",
+      "name": "lib"
+    },
+    {
+      "type": "file",
+      "path": "src/lib/api.ts",
+      "name": "api.ts",
+      "size": 955,
+      "extension": ".ts"
+    },
+    {
+      "type": "file",
+      "path": "src/lib/db.ts",
+      "name": "db.ts",
+      "size": 5654,
+      "extension": ".ts"
+    },
+    {
+      "type": "file",
+      "path": "src/lib/map-rows.ts",
+      "name": "map-rows.ts",
+      "size": 1645,
+      "extension": ".ts"
+    },
+    {
+      "type": "file",
+      "path": "src/lib/queries.ts",
+      "name": "queries.ts",
+      "size": 4387,
+      "extension": ".ts"
+    },
+    {
+      "type": "file",
+      "path": "src/lib/supabase-fetch.ts",
+      "name": "supabase-fetch.ts",
+      "size": 4030,
+      "extension": ".ts"
+    },
+    {
+      "type": "file",
+      "path": "src/lib/supabase.ts",
+      "name": "supabase.ts",
+      "size": 1409,
+      "extension": ".ts"
+    },
+    {
+      "type": "directory",
+      "path": "src/types",
+      "name": "types"
+    },
+    {
+      "type": "file",
+      "path": "src/types/database.ts",
+      "name": "database.ts",
+      "size": 754,
+      "extension": ".ts"
+    },
+    {
+      "type": "file",
+      "path": "supabase-create-table.sql",
+      "name": "supabase-create-table.sql",
+      "size": 598,
+      "extension": ".sql"
+    },
+    {
+      "type": "file",
+      "path": "supabase-instagram-reels.sql",
+      "name": "supabase-instagram-reels.sql",
+      "size": 1503,
+      "extension": ".sql"
+    },
+    {
+      "type": "file",
+      "path": "supabase-weekly-snapshots.sql",
+      "name": "supabase-weekly-snapshots.sql",
+      "size": 607,
+      "extension": ".sql"
+    },
+    {
+      "type": "file",
+      "path": "supabase-youtube-videos.sql",
+      "name": "supabase-youtube-videos.sql",
+      "size": 2022,
+      "extension": ".sql"
+    },
+    {
+      "type": "file",
+      "path": "tailwind.config.ts",
+      "name": "tailwind.config.ts",
+      "size": 518,
+      "extension": ".ts"
+    },
+    {
+      "type": "file",
+      "path": "tsconfig.json",
+      "name": "tsconfig.json",
+      "size": 542,
+      "extension": ".json"
+    },
+    {
+      "type": "directory",
+      "path": "url-capture-output-smoke",
+      "name": "url-capture-output-smoke"
+    },
+    {
+      "type": "directory",
+      "path": "url-capture-output-smoke/meta",
+      "name": "meta"
+    },
+    {
+      "type": "directory",
+      "path": "url-capture-output-smoke/screenshots",
+      "name": "screenshots"
+    }
+  ]
+}

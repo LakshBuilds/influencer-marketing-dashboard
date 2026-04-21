@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "urls:filter": "node scripts/filter-search-urls.mjs",
+    "urls:capture": "node scripts/capture-mobile-screenshots.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.45.0",
@@ -26,6 +28,8 @@
     "eslint-config-next": "14.2.18",
     "postcss": "^8.4.39",
     "tailwindcss": "^3.4.6",
-    "typescript": "^5.5.0"
+    "typescript": "^5.5.0",
+    "playwright": "^1.49.1",
+    "tesseract.js": "^5.1.1"
   }
 }

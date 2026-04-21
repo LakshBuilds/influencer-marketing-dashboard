@@ -1,0 +1,43 @@
+# Graphify Ignore File
+# Exclude build artifacts, dependencies, and binary files to keep the graph focused on source code.
+
+# Dependencies
+node_modules/
+package-lock.json
+
+# Build Outputs
+.next/
+dist/
+build/
+*.tsbuildinfo
+
+# Environment and Secrets
+.env
+.env.local
+.env.production
+.env.development
+
+# Editor/System Files
+.DS_Store
+.vscode/
+.idea/
+
+# Media and Binary Files
+public/
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+*.ico
+*.pdf
+*.mov
+*.mp4
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Git
+.git/

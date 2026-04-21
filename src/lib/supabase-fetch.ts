@@ -134,3 +134,21 @@ export async function fetchInstagramWeeklyViewsDeltaFromSnapshots(): Promise<num
   return Math.max(latest - previous, 0)
 }
 
+export async function fetchYouTubeWeeklyViewsDeltaFromSnapshots(): Promise<number> {
+  if (!supabaseYouTube) return 0
+
+  const { data, error } = await supabaseYouTube
+    .from('weekly_snapshots')
+    .select('week_start_date,total_views')
+    .order('week_start_date', { ascending: false })
+    .limit(2)
+
+  if (error) throw error
+
+  const rows = (data ?? []) as Array<{ total_views?: number | string | null }>
+  if (rows.length < 2) return 0
+
+  const latest = Number(rows[0]?.total_views ?? 0)
+  const previous = Number(rows[1]?.total_views ?? 0)
+  return Math.max(latest - previous, 0)
+}
