@@ -1,6 +1,5 @@
--- Instagram project: public.reels (run in Instagram Supabase SQL Editor)
 create table public.reels (
-  id text not null default (gen_random_uuid())::text,
+  id text not null default (gen_random_uuid ())::text,
   shortcode text null,
   ownerusername text null,
   ownerfullname text null,
@@ -46,4 +45,4 @@ create table public.reels (
   refresh_priority smallint null,
   constraint reels_pkey primary key (id),
   constraint reels_shortcode_unique unique (shortcode)
-) tablespace pg_default;
+) TABLESPACE pg_default;

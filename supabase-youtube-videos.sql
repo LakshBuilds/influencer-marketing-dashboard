@@ -1,6 +1,5 @@
--- YouTube project: public.videos (run in YouTube Supabase SQL Editor)
 create table public.videos (
-  id text not null default (extensions.uuid_generate_v4())::text,
+  id text not null default (extensions.uuid_generate_v4 ())::text,
   video_id text null,
   channel_name text null,
   channel_id text null,
@@ -36,10 +35,10 @@ create table public.videos (
   refresh_count integer null default 0,
   constraint videos_pkey primary key (id),
   constraint videos_video_id_key unique (video_id)
-) tablespace pg_default;
+) TABLESPACE pg_default;
 
-create index if not exists idx_videos_video_id on public.videos using btree (video_id) tablespace pg_default;
-create index if not exists idx_videos_channel_name on public.videos using btree (channel_name) tablespace pg_default;
-create index if not exists idx_videos_created_by_email on public.videos using btree (created_by_email) tablespace pg_default;
-create index if not exists idx_videos_published_at on public.videos using btree (published_at desc) tablespace pg_default;
-create index if not exists idx_videos_is_archived on public.videos using btree (is_archived) tablespace pg_default;
+create index IF not exists idx_videos_video_id on public.videos using btree (video_id) TABLESPACE pg_default;
+create index IF not exists idx_videos_channel_name on public.videos using btree (channel_name) TABLESPACE pg_default;
+create index IF not exists idx_videos_created_by_email on public.videos using btree (created_by_email) TABLESPACE pg_default;
+create index IF not exists idx_videos_published_at on public.videos using btree (published_at desc) TABLESPACE pg_default;
+create index IF not exists idx_videos_is_archived on public.videos using btree (is_archived) TABLESPACE pg_default;

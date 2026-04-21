@@ -12,6 +12,7 @@ interface UseVideosFilters {
 
 export function useVideos(filters: UseVideosFilters = {}) {
   const [videos, setVideos] = useState<Video[]>([])
+  const [snapshots, setSnapshots] = useState({ instagram: 0, youtube: 0 })
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
@@ -20,7 +21,8 @@ export function useVideos(filters: UseVideosFilters = {}) {
     setError(null)
     try {
       const data = await fetchVideos(filters)
-      setVideos(data)
+      setVideos(data.videos)
+      setSnapshots(data.snapshots)
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Failed to load videos')
       setVideos([])
@@ -33,5 +35,5 @@ export function useVideos(filters: UseVideosFilters = {}) {
     load()
   }, [load])
 
-  return { videos, loading, error, refetch: load }
+  return { videos, snapshots, loading, error, refetch: load }
 }

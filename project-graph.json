@@ -1,7 +1,7 @@
 {
   "projectName": "influencer-marketing-dashboard",
   "repository": "git@github.com:LakshBuilds/influencer-marketing-dashboard.git",
-  "generatedAt": "2026-04-21T09:43:44.057Z",
+  "generatedAt": "2026-04-21T10:19:34.485Z",
   "structure": [
     {
       "type": "directory",
@@ -22,7 +22,7 @@
       "type": "file",
       "path": ".gitignore",
       "name": ".gitignore",
-      "size": 286,
+      "size": 320,
       "extension": ""
     },
     {
@@ -71,7 +71,7 @@
       "type": "file",
       "path": "project-graph.json",
       "name": "project-graph.json",
-      "size": 8270,
+      "size": 8505,
       "extension": ".json"
     },
     {
@@ -169,7 +169,7 @@
       "type": "file",
       "path": "src/app/api/videos/route.ts",
       "name": "route.ts",
-      "size": 4063,
+      "size": 3725,
       "extension": ".ts"
     },
     {
@@ -190,7 +190,7 @@
       "type": "file",
       "path": "src/app/page.tsx",
       "name": "page.tsx",
-      "size": 6617,
+      "size": 6709,
       "extension": ".tsx"
     },
     {
@@ -270,7 +270,7 @@
       "type": "file",
       "path": "src/hooks/useVideos.ts",
       "name": "useVideos.ts",
-      "size": 946,
+      "size": 1074,
       "extension": ".ts"
     },
     {
@@ -282,7 +282,7 @@
       "type": "file",
       "path": "src/lib/api.ts",
       "name": "api.ts",
-      "size": 955,
+      "size": 1131,
       "extension": ".ts"
     },
     {
@@ -343,7 +343,7 @@
       "type": "file",
       "path": "supabase-instagram-reels.sql",
       "name": "supabase-instagram-reels.sql",
-      "size": 1503,
+      "size": 1430,
       "extension": ".sql"
     },
     {
@@ -357,7 +357,7 @@
       "type": "file",
       "path": "supabase-youtube-videos.sql",
       "name": "supabase-youtube-videos.sql",
-      "size": 2022,
+      "size": 1952,
       "extension": ".sql"
     },
     {

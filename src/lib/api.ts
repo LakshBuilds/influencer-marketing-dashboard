@@ -6,7 +6,15 @@ interface FetchVideosParams {
   dateTo?: string
 }
 
-export async function fetchVideos(params: FetchVideosParams = {}): Promise<Video[]> {
+export interface VideosResponse {
+  videos: Video[]
+  snapshots: {
+    instagram: number
+    youtube: number
+  }
+}
+
+export async function fetchVideos(params: FetchVideosParams = {}): Promise<VideosResponse> {
   const search = new URLSearchParams()
   if (params.creatorName) search.set('creatorName', params.creatorName)
   if (params.dateFrom) search.set('dateFrom', params.dateFrom)
@@ -23,5 +31,5 @@ export async function fetchVideos(params: FetchVideosParams = {}): Promise<Video
       throw new Error(text || res.statusText || 'Failed to fetch videos')
     }
   }
-  return text ? JSON.parse(text) : []
+  return text ? JSON.parse(text) : { videos: [], snapshots: { instagram: 0, youtube: 0 } }
 }

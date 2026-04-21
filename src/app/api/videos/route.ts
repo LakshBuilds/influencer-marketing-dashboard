@@ -108,18 +108,13 @@ export async function GET(req: NextRequest) {
   })
 
   const withWeeklyDelta = applyWeeklySnapshotDelta(combined)
-  const instagramRows = withWeeklyDelta.filter((v) => v.platform === 'instagram')
-  for (const row of instagramRows) row.weekly_views = 0
-  if (instagramRows.length > 0) {
-    instagramRows[0].weekly_views = instagramWeeklyDelta
-  }
 
-  const youtubeRows = withWeeklyDelta.filter((v) => v.platform === 'youtube')
-  for (const row of youtubeRows) row.weekly_views = 0
-  if (youtubeRows.length > 0) {
-    youtubeRows[0].weekly_views = youtubeWeeklyDelta
-  }
-
-  return NextResponse.json(withWeeklyDelta)
+  return NextResponse.json({
+    videos: withWeeklyDelta,
+    snapshots: {
+      instagram: instagramWeeklyDelta,
+      youtube: youtubeWeeklyDelta,
+    },
+  })
 }
 

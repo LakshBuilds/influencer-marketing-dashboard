@@ -28,7 +28,7 @@ export default function DashboardPage() {
   const [platformFilter, setPlatformFilter] = useState<PlatformFilter>('both')
   const [engagementRangeMonths, setEngagementRangeMonths] = useState<1 | 3 | 6>(3)
 
-  const { videos, loading, error } = useVideos({
+  const { videos, snapshots, loading, error } = useVideos({
     creatorName: creatorFilter.trim() || undefined,
     dateFrom: dateFrom || undefined,
     dateTo: dateTo || undefined,
@@ -64,6 +64,8 @@ export default function DashboardPage() {
     ],
     [platformComparison]
   )
+
+  const totalWeeklySnapshots = (snapshots.instagram || 0) + (snapshots.youtube || 0)
 
   return (
     <div className="min-h-screen bg-surface">
@@ -115,7 +117,7 @@ export default function DashboardPage() {
             totalInstagramVideos={overview.totalInstagramVideos}
             totalYoutubeVideos={overview.totalYoutubeVideos}
             totalViews={overview.totalViews}
-            totalWeeklyViews={overview.totalWeeklyViews}
+            totalWeeklyViews={totalWeeklySnapshots}
             totalPayout={overview.totalPayout}
             loading={loading}
           />
