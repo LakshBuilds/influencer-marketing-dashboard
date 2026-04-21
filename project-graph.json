@@ -1,7 +1,7 @@
 {
   "projectName": "influencer-marketing-dashboard",
   "repository": "git@github.com:LakshBuilds/influencer-marketing-dashboard.git",
-  "generatedAt": "2026-04-21T10:19:34.485Z",
+  "generatedAt": "2026-04-21T10:19:40.475Z",
   "structure": [
     {
       "type": "directory",
@@ -71,7 +71,7 @@
       "type": "file",
       "path": "project-graph.json",
       "name": "project-graph.json",
-      "size": 8505,
+      "size": 8507,
       "extension": ".json"
     },
     {
