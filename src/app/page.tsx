@@ -65,7 +65,12 @@ export default function DashboardPage() {
     [platformComparison]
   )
 
-  const totalWeeklySnapshots = (snapshots.instagram || 0) + (snapshots.youtube || 0)
+  const totalWeeklySnapshots =
+    platformFilter === 'instagram'
+      ? snapshots.instagram || 0
+      : platformFilter === 'youtube'
+        ? snapshots.youtube || 0
+        : (snapshots.instagram || 0) + (snapshots.youtube || 0)
 
   return (
     <div className="min-h-screen bg-surface">
