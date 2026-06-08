@@ -100,6 +100,15 @@ async function settle<T>(
   }
 }
 
+// Wrap a promise with a hard timeout — returns fallback if it takes too long.
+// Prevents a dead upstream (e.g. paused Supabase project) from causing a silent 500.
+function withTimeout<T>(p: Promise<T>, fallback: T, ms = 20000): Promise<T> {
+  return Promise.race([
+    p,
+    new Promise<T>((resolve) => setTimeout(() => resolve(fallback), ms)),
+  ])
+}
+
 export async function GET(req: NextRequest) {
   try {
   const { searchParams } = new URL(req.url)
@@ -109,15 +118,6 @@ export async function GET(req: NextRequest) {
   const dateTo = searchParams.get('dateTo') ?? undefined
 
   const errors: string[] = []
-
-  // Wrap each fetch with a hard 20s timeout so a dead upstream
-  // (e.g. paused Supabase project) never causes a silent 500.
-  function withTimeout<T>(p: Promise<T>, fallback: T, ms = 20000): Promise<T> {
-    return Promise.race([
-      p,
-      new Promise<T>((resolve) => setTimeout(() => resolve(fallback), ms)),
-    ])
-  }
 
   const [youtubeVideos, instagramVideos, instagramWeeklyDelta, youtubeWeeklyDelta] = await Promise.all([
     settle('youtube videos', withTimeout(fetchYouTubeFromSupabase({ creatorName, dateFrom, dateTo }), [] as Video[]), [] as Video[], errors),
