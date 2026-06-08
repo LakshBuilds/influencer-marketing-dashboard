@@ -79,26 +79,51 @@ function applyWeeklySnapshotDelta(videos: Video[]): Video[] {
   return videos
 }
 
+export const dynamic = 'force-dynamic'
+
+// Per-source failures should not blank the dashboard. Return whatever data we
+// got, and surface the failed-source error messages alongside it so the client
+// can show a banner instead of crashing on an empty 500 body.
+async function settle<T>(
+  label: string,
+  p: Promise<T>,
+  fallback: T,
+  errors: string[]
+): Promise<T> {
+  try {
+    return await p
+  } catch (e) {
+    const msg = e instanceof Error ? e.message : String(e)
+    console.error(`[api/videos] ${label} failed:`, msg)
+    errors.push(`${label}: ${msg}`)
+    return fallback
+  }
+}
+
 export async function GET(req: NextRequest) {
+  try {
   const { searchParams } = new URL(req.url)
 
   const creatorName = searchParams.get('creatorName') ?? undefined
   const dateFrom = searchParams.get('dateFrom') ?? undefined
   const dateTo = searchParams.get('dateTo') ?? undefined
 
+  const errors: string[] = []
+
+  // Wrap each fetch with a hard 20s timeout so a dead upstream
+  // (e.g. paused Supabase project) never causes a silent 500.
+  function withTimeout<T>(p: Promise<T>, fallback: T, ms = 20000): Promise<T> {
+    return Promise.race([
+      p,
+      new Promise<T>((resolve) => setTimeout(() => resolve(fallback), ms)),
+    ])
+  }
+
   const [youtubeVideos, instagramVideos, instagramWeeklyDelta, youtubeWeeklyDelta] = await Promise.all([
-    fetchYouTubeFromSupabase({
-      creatorName,
-      dateFrom,
-      dateTo,
-    }),
-    fetchInstagramFromSupabase({
-      creatorName,
-      dateFrom,
-      dateTo,
-    }),
-    fetchInstagramWeeklyViewsDeltaFromSnapshots(),
-    fetchYouTubeWeeklyViewsDeltaFromSnapshots(),
+    settle('youtube videos', withTimeout(fetchYouTubeFromSupabase({ creatorName, dateFrom, dateTo }), [] as Video[]), [] as Video[], errors),
+    settle('instagram videos', withTimeout(fetchInstagramFromSupabase({ creatorName, dateFrom, dateTo }), [] as Video[]), [] as Video[], errors),
+    settle('instagram weekly snapshots', withTimeout(fetchInstagramWeeklyViewsDeltaFromSnapshots(), 0), 0, errors),
+    settle('youtube weekly snapshots', withTimeout(fetchYouTubeWeeklyViewsDeltaFromSnapshots(), 0), 0, errors),
   ])
 
   const combined = [...youtubeVideos, ...instagramVideos].sort((a, b) => {
@@ -115,6 +140,12 @@ export async function GET(req: NextRequest) {
       instagram: instagramWeeklyDelta,
       youtube: youtubeWeeklyDelta,
     },
+    error: errors.length ? errors.join('; ') : undefined,
   })
+  } catch (e) {
+    const msg = e instanceof Error ? e.message : String(e)
+    console.error('[api/videos] unhandled error:', msg)
+    return NextResponse.json({ error: msg, videos: [], snapshots: { instagram: 0, youtube: 0 } }, { status: 500 })
+  }
 }
 
