@@ -8,7 +8,7 @@ const instagramAnonKey = process.env.SUPABASE_ANON_KEY_INSTAGRAM ?? process.env.
 // YouTube project — khksexwjcberpartxvom.supabase.co
 // Key can be overridden via env vars; fallback is the project anon key.
 const youtubeUrl = process.env.SUPABASE_URL_YOUTUBE ?? process.env.NEXT_PUBLIC_SUPABASE_URL_YOUTUBE ?? 'https://khksexwjcberpartxvom.supabase.co'
-const youtubeAnonKey = process.env.SUPABASE_ANON_KEY_YOUTUBE ?? process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY_YOUTUBE ?? 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imtoa3NleHdqY2JlcnBhcnR4dm9tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTA2MDI5NDMsImV4cCI6MjAyNjE3ODk0M30.6VHXs2xnMHrMHrKv3hqfxaFJBb5GRXL80BgifGqU_TM'
+const youtubeAnonKey = process.env.SUPABASE_ANON_KEY_YOUTUBE ?? process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY_YOUTUBE ?? 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imtoa3NleHdqY2JlcnBhcnR4dm9tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM1MTQ2MTEsImV4cCI6MjA4OTA5MDYxMX0.P04px1rk5sIBFpE0MvKRIa8tgohKJUbo1DpJARTLQAc'
 
 export const isInstagramConfigured = Boolean(instagramAnonKey)
 export const isYouTubeConfigured = Boolean(youtubeAnonKey)
