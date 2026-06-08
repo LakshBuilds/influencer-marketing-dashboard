@@ -8,6 +8,24 @@ interface Filters {
   dateTo?: string
 }
 
+// PostgrestError is a plain object, not an Error instance, so `String(err)`
+// returns "[object Object]". Lift its fields into a real Error so message,
+// code, hint, and details survive the throw → catch boundary.
+function toError(prefix: string, err: unknown): Error {
+  if (err instanceof Error) return err
+  if (err && typeof err === 'object') {
+    const e = err as Record<string, unknown>
+    const parts = [
+      e.message && `${e.message}`,
+      e.code && `code=${e.code}`,
+      e.details && `details=${e.details}`,
+      e.hint && `hint=${e.hint}`,
+    ].filter(Boolean)
+    return new Error(`${prefix}: ${parts.join(' | ') || JSON.stringify(err)}`)
+  }
+  return new Error(`${prefix}: ${String(err)}`)
+}
+
 export async function fetchInstagramFromSupabase(
   filters: Filters = {}
 ): Promise<Video[]> {
@@ -38,6 +56,7 @@ export async function fetchInstagramFromSupabase(
         publishedtime,
         created_at
       `)
+      .eq('refresh_failed', false)
       .order('created_at', { ascending: false })
 
     if (filters.creatorName) {
@@ -53,7 +72,7 @@ export async function fetchInstagramFromSupabase(
 
     const to = from + pageSize - 1
     const { data, error } = await q.range(from, to)
-    if (error) throw error
+    if (error) throw toError('Instagram reels query failed', error)
 
     const batch = (data ?? []) as Record<string, unknown>[]
     allRows.push(...batch)
@@ -102,7 +121,7 @@ export async function fetchYouTubeFromSupabase(
 
     const to = from + pageSize - 1
     const { data, error } = await q.range(from, to)
-    if (error) throw error
+    if (error) throw toError('YouTube videos query failed', error)
 
     const batch = (data ?? []) as Record<string, unknown>[]
     allRows.push(...batch)
@@ -124,7 +143,7 @@ export async function fetchInstagramWeeklyViewsDeltaFromSnapshots(): Promise<num
     .order('week_start_date', { ascending: false })
     .limit(2)
 
-  if (error) throw error
+  if (error) throw toError('Weekly snapshots query failed', error)
 
   const rows = (data ?? []) as Array<{ total_views?: number | string | null }>
   if (rows.length < 2) return 0
@@ -143,7 +162,7 @@ export async function fetchYouTubeWeeklyViewsDeltaFromSnapshots(): Promise<numbe
     .order('week_start_date', { ascending: false })
     .limit(2)
 
-  if (error) throw error
+  if (error) throw toError('Weekly snapshots query failed', error)
 
   const rows = (data ?? []) as Array<{ total_views?: number | string | null }>
   if (rows.length < 2) return 0
