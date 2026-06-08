@@ -46,6 +46,7 @@ export async function fetchInstagramFromSupabase(
         url,
         videoviewcount,
         videoplaycount,
+        videowatchcount,
         payout,
         ownerusername,
         ownerfullname,
@@ -98,25 +99,25 @@ export async function fetchYouTubeFromSupabase(
       .from('videos')
       .select(`
         id,
-        video_url,
-        view_count,
+        videourl,
+        viewcount,
         payout,
-        channel_name,
+        channelname,
         created_by_name,
         created_by_email,
-        published_at
+        publishedat
       `)
-      .order('published_at', { ascending: false })
+      .order('publishedat', { ascending: false })
 
     if (filters.creatorName) {
       const term = filters.creatorName.replace(/'/g, "''")
-      q = q.ilike('channel_name', `%${term}%`)
+      q = q.ilike('channelname', `%${term}%`)
     }
     if (filters.dateFrom) {
-      q = q.gte('published_at', filters.dateFrom)
+      q = q.gte('publishedat', filters.dateFrom)
     }
     if (filters.dateTo) {
-      q = q.lte('published_at', filters.dateTo)
+      q = q.lte('publishedat', filters.dateTo)
     }
 
     const to = from + pageSize - 1
