@@ -99,25 +99,25 @@ export async function fetchYouTubeFromSupabase(
       .from('videos')
       .select(`
         id,
-        videourl,
-        viewcount,
+        video_url,
+        view_count,
         payout,
-        channelname,
+        channel_name,
         created_by_name,
         created_by_email,
-        publishedat
+        published_at
       `)
-      .order('publishedat', { ascending: false })
+      .order('published_at', { ascending: false })
 
     if (filters.creatorName) {
       const term = filters.creatorName.replace(/'/g, "''")
-      q = q.ilike('channelname', `%${term}%`)
+      q = q.ilike('channel_name', `%${term}%`)
     }
     if (filters.dateFrom) {
-      q = q.gte('publishedat', filters.dateFrom)
+      q = q.gte('published_at', filters.dateFrom)
     }
     if (filters.dateTo) {
-      q = q.lte('publishedat', filters.dateTo)
+      q = q.lte('published_at', filters.dateTo)
     }
 
     const to = from + pageSize - 1

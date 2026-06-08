@@ -49,18 +49,19 @@ export function mapReelsRow(row: Record<string, unknown>): Video {
 }
 
 export function mapYouTubeRow(row: Record<string, unknown>): Video {
-  // YouTube table columns: viewcount, channelname, videourl, publishedat, payout, created_by_name, created_by_email
-  const views = Number(row.viewcount ?? row.view_count ?? 0)
+  // YouTube table columns: view_count, channel_name, video_url, published_at, payout, created_by_name, created_by_email
+  const views = Number(row.view_count ?? row.viewcount ?? 0)
 
   const payoutRaw = row.payout
   const payout =
     typeof payoutRaw === 'number' ? payoutRaw : Number(payoutRaw ?? 0) || 0
 
-  const postedAt = row.publishedat ?? row.published_at
-    ? new Date(String(row.publishedat ?? row.published_at)).toISOString()
+  const dateRaw = row.published_at ?? row.publishedat
+  const postedAt = dateRaw
+    ? new Date(String(dateRaw)).toISOString()
     : ''
 
-  const videoUrl = String(row.videourl ?? row.video_url ?? '')
+  const videoUrl = String(row.video_url ?? row.videourl ?? '')
 
   return {
     id: String(row.id ?? ''),
@@ -71,7 +72,7 @@ export function mapYouTubeRow(row: Record<string, unknown>): Video {
     payout,
     employee_name: String(row.created_by_name ?? ''),
     employee_email: normaliseEmail(row.created_by_email),
-    creator_name: String(row.channelname ?? row.channel_name ?? ''),
+    creator_name: String(row.channel_name ?? row.channelname ?? ''),
     posted_at: postedAt,
   }
 }
