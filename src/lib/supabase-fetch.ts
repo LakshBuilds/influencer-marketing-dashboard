@@ -107,6 +107,7 @@ export async function fetchYouTubeFromSupabase(
         created_by_email,
         published_at
       `)
+      .eq('is_archived', false)
       .order('published_at', { ascending: false })
 
     if (filters.creatorName) {
