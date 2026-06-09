@@ -10,9 +10,22 @@ const EMAIL_ALIASES: Record<string, string> = {
   'yash@buyhatke.com':        'yashmadaan@buyhatke.com',
 }
 
+/**
+ * Canonical display names — keyed by canonical email.
+ * After email normalisation, use this to get the consistent display name.
+ */
+const EMAIL_TO_NAME: Record<string, string> = {
+  'gurnimar@buyhatke.com':    'Gurnimar',
+  'yashmadaan@buyhatke.com':  'Yash Madaan',
+}
+
 function normaliseEmail(raw: unknown): string {
   const email = String(raw ?? '').trim().toLowerCase()
   return EMAIL_ALIASES[email] ?? email
+}
+
+function normaliseName(rawName: unknown, canonicalEmail: string): string {
+  return EMAIL_TO_NAME[canonicalEmail] ?? String(rawName ?? '')
 }
 
 export function mapReelsRow(row: Record<string, unknown>): Video {
@@ -34,6 +47,7 @@ export function mapReelsRow(row: Record<string, unknown>): Video {
 
   const videoUrl = String(row.videourl ?? row.displayurl ?? row.url ?? '')
 
+  const email = normaliseEmail(row.created_by_email)
   return {
     id: String(row.id ?? ''),
     platform: 'instagram',
@@ -41,8 +55,8 @@ export function mapReelsRow(row: Record<string, unknown>): Video {
     views,
     weekly_views: views,
     payout,
-    employee_name: String(row.created_by_name ?? ''),
-    employee_email: normaliseEmail(row.created_by_email),
+    employee_name: normaliseName(row.created_by_name, email),
+    employee_email: email,
     creator_name: String(row.ownerfullname ?? row.ownerusername ?? ''),
     posted_at: postedAt,
   }
@@ -63,6 +77,7 @@ export function mapYouTubeRow(row: Record<string, unknown>): Video {
 
   const videoUrl = String(row.video_url ?? row.videourl ?? '')
 
+  const email = normaliseEmail(row.created_by_email)
   return {
     id: String(row.id ?? ''),
     platform: 'youtube',
@@ -70,8 +85,8 @@ export function mapYouTubeRow(row: Record<string, unknown>): Video {
     views,
     weekly_views: views,
     payout,
-    employee_name: String(row.created_by_name ?? ''),
-    employee_email: normaliseEmail(row.created_by_email),
+    employee_name: normaliseName(row.created_by_name, email),
+    employee_email: email,
     creator_name: String(row.channel_name ?? row.channelname ?? ''),
     posted_at: postedAt,
   }
