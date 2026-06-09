@@ -7,7 +7,7 @@ import type { Video } from '@/types/database'
 const EMAIL_ALIASES: Record<string, string> = {
   'gurnimarjit@buyhatke.com': 'gurnimar@buyhatke.com',
   'gurmar@buyhatke.com':      'gurnimar@buyhatke.com',
-  // add more as needed: 'alias@buyhatke.com': 'canonical@buyhatke.com'
+  'yash@buyhatke.com':        'yashmadaan@buyhatke.com',
 }
 
 function normaliseEmail(raw: unknown): string {
