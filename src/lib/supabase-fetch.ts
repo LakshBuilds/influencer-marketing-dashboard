@@ -57,7 +57,7 @@ export async function fetchInstagramFromSupabase(
         publishedtime,
         created_at
       `)
-      .eq('refresh_failed', false)
+      .or('refresh_failed.eq.false,videoplaycount.not.is.null')
       .order('created_at', { ascending: false })
 
     if (filters.creatorName) {
